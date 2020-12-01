@@ -30,3 +30,4 @@ if result == None:
 
 print(result, "번 째 인덱스에 위치해있음")
 
+
