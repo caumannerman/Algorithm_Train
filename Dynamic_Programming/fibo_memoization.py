@@ -1,6 +1,7 @@
 memo = [0]*100
 
 def fibo(n):
+    print('fibo(',n,')', end = ' ')
     if n == 1 or n == 2:
         return 1
     if memo[n] != 0:
@@ -8,4 +9,4 @@ def fibo(n):
     memo[n] = fibo(n-1) + fibo(n-2)
     return memo[n]
 
-print(fibo(3))
+print(fibo(10))
