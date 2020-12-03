@@ -4,7 +4,7 @@ input = sys.stdin.readline
 # heapq의 메서드들   heapq.heappush
 # heap.heappop
 # heap.heapify(list)
-INF = (1e9)
+INF = int(1e9)
 # 노드의 수와 간선의 수 입력받
 n, m = map(int, input().split())
 
