@@ -16,3 +16,5 @@ for i in range(len(list1)):
     list1[i], list1[min_index] = list1[min_index], list1[i] ### Go언어에서처럼 매개체 없이 둘이 서로 값을 바꿀 수 있음.
 
 print(list1)
+
+
