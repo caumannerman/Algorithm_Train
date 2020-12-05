@@ -17,7 +17,11 @@ def BS(array, target):
             end = mid-1
         else:
             start = mid+1
-
+        # 이곳을 start >= end가 아니라 start > end로 해주는 이유는, 다음과 같다
+        # start = 4, end = 5 인 상태고, target =5라고 생각해보자.
+        # mid = (4+5) //2 로 4가 되고, 아래의 else문에 의해 start = mid +1 즉, start 는 5가 되어 start = end = 5가 된다.
+        # 다시 한번 돌아와 mid = (5+5) //2 가 되어 mid = 5가 되고,  array[mid] == target이 되어 return mid로 정상종료가 된다.
+        # 즉, start == end인 상태는 아직 함수가 mid를 반환하며 종료할 수 있는 가능성이 열려있는 상태이므로 target이 array에 없다고 보장할 수 없다.
         if start > end:
             return None
 
