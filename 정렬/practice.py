@@ -66,3 +66,39 @@ def quick(array, start, end):
 quick(array, 0,len(array)-1)
 print(array)
 '''
+
+#12.5 quicksort
+'''
+array = [5,7,9,0,3,1,6,2,4,8,1000,3.5,27,45,4,5]
+
+def quick(array):
+    if len(array) <= 1:
+        return array
+
+    pivot = array[0]
+    tail = array[1:]
+
+    left = [x for x in tail if x < pivot]
+    right = [x for x in tail if x >= pivot]
+
+    return quick(left)+[pivot]+ quick(right)
+
+print(array)
+quick(array)
+print(quick(array))
+'''
+
+
+# 12.5 계수정렬
+'''
+array = [7,5,9,0,3,1,6,2,9,1,4,8,0,5,2]
+
+count = [0]*(len(array)+1)
+
+for i in range(len(array)):
+    count[array[i]] += 1
+
+for j in range(len(count)):
+    for k in range(count[j]):
+        print(j, end = ' ')
+'''
