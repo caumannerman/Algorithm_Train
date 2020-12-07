@@ -50,6 +50,7 @@ print(distance)
 
 # 이 코드의 차별점은, 최소 비용 노드를 뽑아주는 함수를 작성하지 않아도 되는 것과, heapq를 이용한 우선순위 큐를 이용하는 것.
 # 최소비용 노드를 뽑아주는 연산의 시간복잡도가 기존에는 O(N)였지만, O(logN)으로 가능하게 된다.
+'''
 import heapq
 import sys
 input = sys.stdin.readline
@@ -84,3 +85,30 @@ def dijkstra(start):
 dijkstra(start)
 
 print(distance)
+'''
+
+#12.8 Floyd-Warshall Algorithm
+
+INF = int(1e9)
+n, m = map(int, input().split())
+graph = [[INF]*(n+1) for _ in range(n+1)]
+
+for _ in range(m):
+    a, b, c = map(int, input().split())
+    graph[a][b] = c
+
+for i in range(1, n+1):
+    graph[i][i] = 0
+
+for i in range(1, n+1):
+    for j in range(1, n+1):
+        if j == i:
+            continue
+        for k in range(1, n+1):
+            if k == i or k == j:
+                continue
+            if graph[j][k] > graph[j][i] + graph[i][k]:
+                graph[j][k] = graph[j][i] + graph[i][k]
+
+
+print(graph)

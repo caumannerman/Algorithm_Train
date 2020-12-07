@@ -1,7 +1,7 @@
 ''' 플로이드 워셜 알고리즘은 " 모든 지점에서 다른 모든 지점까지의 최단 경로를 모두 구해야하는 경우" 에 사용한다.'''
 # 플로이드 워셜 알고리즘은 다이나믹프로그래밍
 # 노드 N개일 때, N번의 단계를 반복하며, 점화식에 맞게 2차원리스트를 갱신함.
-#3중 반복문
+# 3중 반복문
 """ 플로이드 워셜 알고리즘의 점화식 :    Dab = min( Dab, Dak + Dkb )"""
 
 """과정"""
@@ -11,18 +11,18 @@
 
 
 
-INF = int(1e9)
+
 #노드 갯수 n, 간선 갯수 m
-n ,m = map(int, input().split())
-
+INF = int(1e9)
+n, m = map(int, input().split())
 graph = [[INF]*(n+1) for _ in range(n+1)]
-for i in range(1,n+1):
-    graph[i][i] = 0
 
-# 그래프 초기화
 for _ in range(m):
     a, b, c = map(int, input().split())
     graph[a][b] = c
+
+for i in range(1, n+1):
+    graph[i][i] = 0
 
 for i in range(1, n+1):
     for j in range(1, n+1):
@@ -33,8 +33,9 @@ for i in range(1, n+1):
                 continue
             if graph[j][k] > graph[j][i] + graph[i][k]:
                 graph[j][k] = graph[j][i] + graph[i][k]
-            if graph[k][j] > graph[k][i] + graph[i][j]:
-                graph[k][j] = graph[k][i] + graph[i][j]
+
+
+print(graph)
 
 for i in graph[1:]:
     print(i[1:])
