@@ -29,7 +29,7 @@ print(dp[n])
 '''
 
 # 12.5 1로 만들기 fibo_bottom_up
-
+'''
 x = int(input())
 dp = [0]*30001
 
@@ -50,6 +50,8 @@ def min_cal(x):
 
 print(min_cal(x))
 
+
+'''
 
 
 
