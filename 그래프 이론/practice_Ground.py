@@ -37,7 +37,7 @@ print(parent[1:])
 
 #12.9 Kruskal Algorithm
 # 신장트리. 싸이클 없어야 함. 최소 비용 구하기.
-
+'''
 def find_parent(parent, x):
     if parent[x] != x:
         parent[x] = find_parent(parent, parent[x])
@@ -73,4 +73,11 @@ for i in graph:
         continue
 
 print(cost)
+
+'''
+
+
+
+
+
 
