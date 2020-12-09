@@ -3,6 +3,7 @@ a.sort()
 j=0
 result = ""
 num = 0
+
 for i in range(len(a)):
     if ord(a[i]) > 57:
         j = i
