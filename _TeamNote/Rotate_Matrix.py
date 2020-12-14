@@ -27,12 +27,12 @@ def rotate_Matrix_90CounterClockwise(matrix):
 def show_matrix(mat):
     for i in mat:
         print(i)
-        
+
 a = [[1,2,3,4,5],[2,5,2,6,7],[11,5,9,0,2]]
 
 
 
 print(show_matrix(a))
-print(show_matrix(rotate_Matrix_clockwise(a)))
+print(show_matrix(rotate_Matrix_90clockwise(a)))
 print("=======================")
-print(show_matrix(rotate_Matrix_CounterClockwise(a)))
+print(show_matrix(rotate_Matrix_90CounterClockwise(a)))
