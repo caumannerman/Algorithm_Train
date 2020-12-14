@@ -12,6 +12,9 @@
 
 # 출력 - 첫 째 줄에 두 사람이 볼링공을 고르는 경우의 수를 출력한다.
 
+
+# 풀이 1/2 - itertools의 combinations 함수 사
+'''
 from itertools import combinations
 
 n, m = map(int, input().split())
@@ -26,4 +29,21 @@ for i in combi:
 
 print(result)
 
+'''
 
+# 풀이 2/2용 - counting sort 응용
+n, m = map(int, input().split())
+data = list(map(int, input().split()))
+
+arr = [0]*(m + 1)
+
+for i in data:
+    arr[i] += 1
+
+result = 0
+for i in arr[1:]:
+
+    result += i * (n - i)
+    n -= i
+
+print(result)
