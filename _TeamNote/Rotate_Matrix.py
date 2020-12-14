@@ -1,5 +1,5 @@
 
-def rotate_Matrix_clockwise(matrix):
+def rotate_Matrix_90clockwise(matrix):
     # nxm size matrix
     n = len(matrix)
     m = len(matrix[0])
@@ -12,7 +12,7 @@ def rotate_Matrix_clockwise(matrix):
 
 
 
-def rotate_Matrix_CounterClockwise(matrix):
+def rotate_Matrix_90CounterClockwise(matrix):
     n = len(matrix)
     m = len(matrix[0])
     result = [[0]*n for _ in range(m)]
@@ -27,6 +27,7 @@ def rotate_Matrix_CounterClockwise(matrix):
 def show_matrix(mat):
     for i in mat:
         print(i)
+        
 a = [[1,2,3,4,5],[2,5,2,6,7],[11,5,9,0,2]]
 
 
