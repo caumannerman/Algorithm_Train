@@ -20,10 +20,14 @@ def Pmt(n,r):
 
 
 
-def Cbn(n, r):  # ?? 이게 무조건 정수가 된다는 걸 증명할 수 있으신  분
+def Cbn(n, r):
 
     result = Pmt(n, r)
 
     for i in range(r, 1, -1):
         result //= i
     return result
+
+def fac(n):
+    result = n
+    
