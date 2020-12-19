@@ -4,22 +4,15 @@
 
 """ 첫 원소는 이미 정렬되어있다고 생각한다. 두 번 째 원소부터, 들어가야 할 위치를 앞쪽에서 찾은 후(비교) , 위치를 바꿔준다."""
 
-list = [9, 3, 5, 6, 2, 1, 8, 4, 7,100,0.3, 1251, 99, 45,32,5412]
+data = [9, 3, 5, 6, 2, 1, 8, 4, 7,100,0.3, 1251, 99, 45,32,5412]
 
-
-for i in range(1,len(list)):
-    temp = list[i]
-    for j in range(0,i):
-        if list[i] <= list[j]:  # else 없이 if 하나로!
-            for k in range(i-1, j-1, -1):
-                list[k+1] = list[k]
-            list[j] = temp
+for i in range(1, len(data)):
+    for j in range(i, 0, -1):
+        if data[j] < data[j-1]:
+            data[j], data[j-1] = data[j-1], data[j]
+        # else문을 안 넣어줘도 결과적으로는 상관이 없지만, 이미 들어갈 자리를 찾은 상태에서 의미없는 연산을 꽤나 많이 해야한다.
+        else:
             break
 
-print(list)
 
-
-
-
-
-
+print(data)
