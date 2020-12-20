@@ -15,3 +15,13 @@ arr.sort()
 
 for i in arr:
     print(i[1], end = ' ')
+
+"""  조금 더 세련된 방법  
+
+for _ in range(n):
+    a, b = input.split()
+    arr.append(a, int(b))
+
+arr = sorted(arr, key = lambda x:x[1])
+
+"""
