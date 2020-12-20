@@ -102,3 +102,22 @@ for j in range(len(count)):
     for k in range(count[j]):
         print(j, end = ' ')
 '''
+# 12.20 위에서 아래로 - 삽입정렬
+"""
+n = int(input())
+array = []
+array.append(int(input()))
+
+for _ in range(n-1):
+    tmp = int(input())
+    array.append(tmp)
+    for i in range(len(array)-1):
+        if tmp > array[i]:
+            for j in range(len(array)-2, i-1, -1):
+                array[j+1] = array[j]
+            array[i] = tmp
+            break
+
+print(array)
+"""
+
