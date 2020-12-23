@@ -8,11 +8,12 @@
 # 첫 째 줄에 떡의 개수 N과 요청한 떡의 길이 M이 주어진다.
 # 둘째 줄에는 떡의 개별 높이가 주어진다. 떡 높이의 총합은 항상 M이상이므로, 손님은 필요한 양만큼 떡을 사갈 수 있다.
 # 적어도 M만큼 손님이 가져가기 위해, 절단기에 설정할 수 있는 높이의 최댓값을 출력한다.
+import timeit
 
 n, m = map(int, input().split())
 dduk = list(map(int, input().split()))
 
-
+st = timeit.default_timer()
 start = 0
 end = max(dduk)
 result = 0
@@ -34,9 +35,59 @@ while (start <= end):
         start = mid + 1
     else:
         end = mid -1
-
+ed = timeit.default_timer()
 print(result, "초과공급 ")
+print(ed-st)
 
 # 이진탐색의 핵심.  조건에서 start = mid + 1 혹은 end = mid - 1을 통해, start~end 범위가 우리가 찾고자 하는 값을 벗어나게 된다면,
 # start와 end는 계속 사이가 줄어, 인접하게 되고, 둘 중 target쪽에 가까운 쪽으로 합쳐지고, start와 end가 엇갈리게 되며 끝난다.
 # 그렇다면, start~end가 target을 포함하지 않게 된 그 시점 직전의 mid가 우리가 찾던 값이므로, 이것을 항상 기록해두는 과정이 위 풀이의 핵심이다.
+"""  새로운 코드 - 조금 더 빠름. By 양준식
+
+n, m = map(int, input().split())
+dduk = list(map(int, input().split()))
+end = max(dduk)
+start = 0
+
+def take(mid):
+    result = 0
+    for i in dduk:
+        if i > mid:
+            result += i - mid
+        if result > m:
+            return None
+    return result
+
+
+st = timeit.default_timer()
+
+while True:
+    mid = (start + end) // 2
+    if start == end:
+        if take(mid) == None or take(mid) >= m:
+            print(mid)
+            break
+        else:
+            print(mid - 1)
+            break
+    else:
+        if take(mid) == None:
+            start = mid + 1
+        elif take(mid) == m:
+            print(mid)
+            break
+        else:
+            end = mid - 1
+
+ed = timeit.default_timer()
+
+print(ed-st)
+
+"""
+
+
+
+
+
+
+
