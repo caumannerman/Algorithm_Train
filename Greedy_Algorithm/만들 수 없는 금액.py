@@ -12,6 +12,10 @@ unit = list(map(int,input().split()))
 unit.sort()
 section_total = unit[0]
 
+if section_total != 1:
+    print(1)
+    exit()
+
 for i in unit[1:]:
     if section_total + 1 < i:
         break
