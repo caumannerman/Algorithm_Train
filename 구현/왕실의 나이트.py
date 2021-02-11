@@ -1,30 +1,19 @@
-import timeit
-
-
-
+"""풀이1"""
 pos = list(input())
 
 
-start = timeit.default_timer()
-# 측정 할 코드는 여기에 둔다.
-'''
-xpos, ypos = int(pos[1]), ord(pos[0])
-
-
-
+dx = [2,2, -2, -2, 1, -1, 1, -1]
+dy = [1, -1, 1, -1, 2, 2, -2, -2]
 count = 0
-
-for i in (2,1):
-    for j in (1,-1): # x는 2, -2, 1,-1 순이다.
-        for k in (-1,1):
-            if xpos + i*j > 0 and xpos + i*j < 9 and ypos + (3-i)*k > 96 and ypos + (3-i)*k < 105:
-                count += 1
-
+for i in range(8):
+    if ord(pos[0]) + dx[i] >= ord('a') and ord(pos[0]) + dx[i] <= ord('h') and int(pos[1]) + dy[i] >= 1 and int(pos[1]) + dy[i] <= 8:
+        count += 1
 
 
 print(count)
-'''
 
+
+""" 풀이 2
 row = int(pos[1])
 column = int (ord(pos[0])) - int(ord('a')) +1
 
@@ -38,8 +27,18 @@ for step in steps:
         result += 1
 
 print(result)
+"""
 
-stop = timeit.default_timer()
 
-# s(초) 단위로 나온다.
-print(stop - start)
+''' 풀이 3
+xpos, ypos = int(pos[1]), ord(pos[0])
+
+count = 0
+
+for i in (2,1):
+    for j in (1,-1): # x는 2, -2, 1,-1 순이다.
+        for k in (-1,1):
+            if xpos + i*j > 0 and xpos + i*j < 9 and ypos + (3-i)*k > 96 and ypos + (3-i)*k < 105:
+                count += 1
+print(count)
+'''
