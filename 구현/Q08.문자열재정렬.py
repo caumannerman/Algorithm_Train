@@ -21,3 +21,20 @@ if numsum != 0:
 
 print(''.join(eng))
 
+
+"""두 번째 풀이
+s = list(input())
+a = 0
+s.sort()
+print(s)
+for i in range(len(s)):
+    if s[i].isalpha():
+        a = i
+        break
+num = 0
+for i in range(a):
+    num += int(s[i])
+
+result = "".join(s[a:])+str(num)
+print(result)
+"""
