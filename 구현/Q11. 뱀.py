@@ -15,58 +15,55 @@
 # 다음 L개의 줄에는 뱀의 방향 변환 정보가 주어지는데, 정수 X와 문자 C로 이루어져 있으며, 게임시작으로부터 X초가 끝난 뒤에 왼쪽(C가 'L')또는 오른쪽(C가 'D')으로 90도 방향을 회전시킨다는 뜻.
 # X는 10,000 이하의 양의 정수이며, 방향 전환정보는 X가 증가하는 순으로 주어진다.
 # 출력 - 게임이 몇초에 끝나는지 출력
+
+""" 사과를 먹으면, 사과를 맵에서 제거해줘야하는 것!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"""
+
 from collections import deque
-n = int(input())      ##############
-k = int(input())     ##############
-apple = []          ##############
 
+n = int(input())
+k = int(input())
+apple = []
 for _ in range(k):
-    a, b= map(int, input().split())
-    apple.append((a,b))
+    a, b = map(int, input().split())
+    apple.append((a, b))
 
-loc_change = [] ##############
-L = int(input())
+l = int(input())
+cd = []
 
-for _ in range(L):
+for _ in range(l):
     x, c = input().split()
-    loc_change.append((int(x),c))
-loc_change.append((100,"C"))
+    x = int(x)
+    cd.append((x, c))
+cd.append((10002,"no_Mean"))
+body = deque([(1, 1)])
 
-dx = [0,1,0,-1]
-dy = [1,0,-1,0]
-snake_x = 0
-snake_y = 0
-snakebody = deque([(0,0)])
-
+nowx = 1
+nowy = 1
+dir = 1
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
 time = 0
-direc = 0
 
-for i in range(len(loc_change)):
-    if i>=1:
-        timeleft = loc_change[i][0] - loc_change[i-1][0]
+for i in cd:
+    while time < i[0]:
+        if nowx + dx[dir] == 0 or nowx + dx[dir] > n or nowy + dy[dir] == 0 or nowy + dy[dir] > n or (
+        nowx + dx[dir], nowy + dy[dir]) in body:
+            print(time+ 1)
+            exit()
+        else:
+            body.append((nowx + dx[dir], nowy + dy[dir]))
+            nowx = nowx + dx[dir]
+            nowy = nowy + dy[dir]
+            if (nowx, nowy) not in apple:
+                body.popleft()
+            else:
+                apple.remove((nowx, nowy))
+
+            time += 1
+    if i[1] == 'L':
+        dir = (dir + 3) % 4
     else:
-        timeleft = loc_change[i][0]
-
-    while timeleft > 0:
-        if snake_x + dx[direc] < 0 or snake_x + dx[direc] > n or snake_y + dy[direc] <0 or snake_y + dy[direc] > n:
-            print(time+1)
-            quit()
-        if (snake_x + dx[direc], snake_y + dy[direc]) in snakebody:
-            print(time+1)
-            quit()
-        time += 1
-        snake_x += dx[direc]
-        snake_y += dy[direc]
-        snakebody.append((snake_x, snake_y))
-        if (snake_x, snake_y) not in apple:
-            snakebody.popleft()
-        timeleft -= 1
-
-    if loc_change[i][1] == 'D':
-        direc += 1
-    else:
-        direc -= 1
-
+        dir = (dir + 1) % 4
 
 
 
