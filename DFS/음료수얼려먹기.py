@@ -18,30 +18,31 @@
 # 구멍이 뚫린 부분은 0, 그렇지 않은 부분은 1이다.
 # 출력 - 한 번에 만들 수 있는 아이스크림의 개수를 출력한다.
 
-n, m = map(int, input().split())
-data = []
-for i in range(n):
-    data.append(list(map(int, input())))
-
-dx = [-1,1,0,0]
-dy = [0,0,-1,1]
 
 # 핵심 아이디어는 dfs함수에서는 result가 몇개인지, 신경쓰지 않는 것이다. 단지 0인 곳에서 dfs함수가 호출 되면, 연결된 모든 0들을 1로 만들어주는 것 뿐이고, 를
 # 함수 밖 2중 for문 속에서 dfs를 호출 할 때마다 result에 1을 더해주는 것
-def dfs(data, a, b):
-    data[a][b] = 1
+n ,m = map(int, input().split())
+data = []
+for _ in range(n):
+    data.append(list(map(int,input())))
+
+dx = [-1, 0 ,1, 0]
+dy = [0, 1, 0, -1]
+
+count = 0
+def dfs(x,y):
+    data[x][y] = 1
     for i in range(4):
-        nx = a + dx[i]
-        ny = b + dy[i]
-        if nx >= 0 and nx < n and ny >= 0 and ny < m:
-            if data[nx][ny] == 0:
-                dfs(data, nx, ny)
-result = 0
+        newx = x + dx[i]
+        newy = y + dy[i]
+        if newx >= 0 and newy >= 0 and newx < n and newy < m and data[newx][newy] == 0:
+            dfs(newx,newy)
+
 
 for i in range(n):
     for j in range(m):
         if data[i][j] == 0:
-            dfs(data, i, j)
-            result += 1
+            dfs(i,j)
+            count += 1
 
-print(result)
+print(count)
