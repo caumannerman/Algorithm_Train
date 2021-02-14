@@ -6,27 +6,33 @@
 
 n = int(input())
 my = list(map(int, input().split()))
+my.sort()
 m = int(input())
-client = list(map(int, input().split()))
+
+cli = list(map(int, input().split()))
 
 
-def bin_search(arr, target, start, end):
-    if start > end:
-        return None
-
-    mid = (start+end) //2
-    if arr[mid] == target:
-        return mid
-    elif arr[mid] > target:
-        return bin_search(arr, target, start, mid-1)
+def bs(target):
+    start = 0
+    end = len(my) -1
+    while True:
+        mid = (start+ end) // 2
+        if my[mid] == target:
+            return mid
+        elif my[mid] > target:
+            end = mid -1
+        else:
+            start = mid + 1
+        if start > end:
+            return None
+result = []
+for i in cli:
+    if bs(i):
+        result.append('yes')
     else:
-        return bin_search(arr, target, mid+1, end)
+        result.append('no')
 
-for i in client:
-    if bin_search(my,i,0,n-1) != None:
-        print("yes", end = ' ')
-    else:
-        print("no", end = ' ')
+print(*result)
 
 
 
