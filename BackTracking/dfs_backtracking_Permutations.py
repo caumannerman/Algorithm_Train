@@ -1,20 +1,18 @@
 n, m = map(int, input().split())
 arr = [i+1 for i in range(n)]
 result = [0] * m
-checked = [False] * n
+visited = [False] * n
 
-def dfs(level,n,m):
-    if level == m:
-        print(' '.join(map(str,result)))
+def dfs(level):
+    if level == len(result):
+        print(*result)
         return
 
-    for i in range(n):
-        if checked[i] == True:
-            continue
+    for i in range(len(arr)):
+        if not visited[i]:
+            result[level] = arr[i]
+            visited[i] = True
+            dfs(level+1)
+            visited[i] = False
 
-        result[level] = arr[i]
-        checked[i] = True
-        dfs(level+1,n,m)
-        checked[i] = False
-
-dfs(0,n,m)
+dfs(0)
