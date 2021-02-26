@@ -18,39 +18,42 @@ from collections import deque
 from collections import deque
 import copy
 
-v = int(input())
-graph = [[] for i in range(v+1)]
-runtime = [0]*(v+1)
+import sys
+from collections import deque
+import copy
+input = sys.stdin.readline
+n = int(input())
 
-indegree = [0]*(v+1)
+# topology 기본 indegree(진입차수), graph
+indegree = [0] * (n+1)
+graph = [[] for _ in range(n+1)]
+time = [0] * (n+1)
 
 
-for i in range(v):
-    arr = list(map(int, input().split()))
-    runtime[i] = arr[0]
-    for j in arr[1:-1]:
+for i in range(1,n+1):
+    now = list(map(int, input().split()))
+    time[i] = now[0]
+# 여기서 조심해야할 것이, j에서 i로 진입경로가 존재한다면, graph[j]에 i를 append해줘야한다. ==> q에서 j를 꺼냈을 때, q에서 갈 수 있는 노드들에 대해 indegree를 빼줘야하므로.
+    for j in now[1:-1]:
         graph[j].append(i)
-        indegree[i] += 1
+    indegree[i] += len(now) - 2
 
 
-def topology_sort():
-    result = copy.deepcopy(runtime)
+def topology():
+    result = copy.deepcopy(time)
     q = deque()
-
-    for i in range(1, v+1):
+    for i in range(1, n+1):
         if indegree[i] == 0:
             q.append(i)
-
     while q:
         now = q.popleft()
         for i in graph[now]:
-            result[i] = max(result[i], result[now] + runtime[i] )
+# 이것이 핵심 알고리즘. 이미 다른 선수과목에서 해당 과목까지 걸리는 시간을 초기화했을 수 있으므로,  max로 처리. 그랬든 안 그랬든 indegree는 줄여줘야한다.
+            result[i] = max(result[i], result[now] + time[i])
             indegree[i] -= 1
-
             if indegree[i] == 0:
                 q.append(i)
+    for i in result[1:]:
+        print(i)
 
-    for i in range(1, v+1):
-        print(result[i])
-
-topology_sort()
+topology()
