@@ -9,13 +9,13 @@ N(1 ≤ N ≤ 90)이 주어졌을 때, N자리 이친수의 개수를 구하는 
 # 출력 : 첫째 줄에 N자리 이친수의 개수를 출력한다.
 
 n = int(input())
-dp = [0] * (n + 1)
-dp[1] = 1
-dp[2] = 1
+
 if n == 1 or n == 2:
     print(1)
     exit()
-
+dp = [0] * (n + 1)
+dp[1] = 1
+dp[2] = 1
 for i in range(3, n + 1):
     dp[i] = dp[i - 1] + dp[i - 2]
 print(dp[n])
