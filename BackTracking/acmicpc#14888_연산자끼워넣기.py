@@ -25,28 +25,33 @@ N개의 수와 N-1개의 연산자가 주어졌을 때, 만들 수 있는 식의
 # 연산자를 어떻게 끼워넣어도 항상 -10억보다 크거나 같고, 10억보다 작거나 같은 결과가 나오는 입력만 주어진다.
 # 또한, 앞에서부터 계산했을 때, 중간에 계산되는 식의 결과도 항상 -10억보다 크거나 같고, 10억보다 작거나 같다.
 
+import sys
+input = sys.stdin.readline
 n = int(input())
-num = list(map(int, input().split()))
-op = list(map(int , input().split()))
-max_result = -int(1e9) -1
-min_result = int(1e9) + 1
+data = list(map(int, input().split()))
+p,m,u,d = map(int, input().split())
+max_r = -int(1e9)
+min_r = int(1e9)
 
-def dfs(level, result, p, m, mul, div):
+first_result = data[0]
+
+def dfs(level,result, p,m,u,d)
     if level == n:
-        global max_result, min_result
-        max_result = max(max_result, result)
-        min_result = min(min_result, result)
+        global max_r, min_r
+        max_r = max(max_r, result)
+        min_r = min(min_r, result)
         return
     if p:
-        dfs(level+1, result + num[level], p - 1,m,mul,div)
+        dfs(level+1, result + data[i], p-1, m, u, d)
     if m:
-        dfs(level+1, result-num[level], p, m-1,mul,div)
-    if mul:
-        dfs(level+1, result * num[level], p, m, mul-1, div)
-    if div:
-        dfs(level +1, result // num[level] if result >=0 else -((-result)//num[level]), p, m, mul, div-1)
-
-
-dfs(1, num[0], op[0], op[1], op[2], op[3])
-print(max_result)
-print(min_result)
+        dfs(level+1, result - data[i], p, m-1, u, d)
+    if u:
+        dfs(level+1, result * data[i], p,m,u-1, d)
+    if d:
+        if result < 0 or data[i] <0:
+            dfs(level+1, (abs(result) // abs(data[i])) * (-1), p,m,u,d-1 )
+        else:
+            dfs(level + 1, result // data[i], p,m,u,d-1)
+dfs(1,first_result, p,m,u,d)
+print(max_r)
+print(min_r)
