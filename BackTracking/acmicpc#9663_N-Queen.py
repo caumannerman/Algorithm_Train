@@ -5,27 +5,29 @@ N이 주어졌을 때, 퀸을 놓는 방법의 수를 구하는 프로그램을 
 # 출력 : 첫째 줄에 퀸 N개를 서로 공격할 수 없게 놓는 경우의 수를 출력한다.
 
 n = int(input())
-result = [0] * n
 visited = [False] * n
+result = [0] * n
 count = 0
 
 
-def possi(level, cdd):
+def isPossible(level, x):
+    if visited[x]:
+        return False
     for i in range(level):
-        if visited[cdd] or level - i == abs(result[i] - cdd):
+        if level - i == abs(result[i] - x):
             return False
     return True
 
 
 def dfs(level):
-    if level == len(result):
+    if level == n:
         global count
         count += 1
         return
     for i in range(n):
-        if possi(level, i):
-            result[level] = i
+        if isPossible(level, i):
             visited[i] = True
+            result[level] = i
             dfs(level + 1)
             visited[i] = False
 
