@@ -6,28 +6,19 @@
    '''
 # 첫 번 째 줄에서 N, M을 ' '으로 구분하여 입력받고, 둘 째 줄에서부터 '한 행'씩 총 M번 입력받는다.
 #룰에 맞게 뽑을 수 있는 가장 높은 숫자를 출력한다.
-import timeit
+import sys
+input = sys.stdin.readline
+n ,m = map(int, input().split())
+arr = []
 
+for i in range(n):
+    arr.append(list(map(int, input().split())))
 
+minmax = -1
 
+for i in range(n):
+    temp = min(arr[i])
+    if temp > minmax:
+        minmax = temp
 
-n, m = map(int, input().split())
-
-
-data = []
-
-for _ in range(n):
-    a = list(map(int, input().split()))
-    data.append(a)
-
-start = timeit.default_timer()
-result = []
-
-for i in data:
-    result.append(min(i))
-
-print(max(result))
-
-end = timeit.default_timer()
-
-print(end-start)
+print(minmax)
