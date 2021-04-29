@@ -33,17 +33,17 @@ print(result)
 
 # 풀이 2/2용 - counting sort 응용
 n, m = map(int, input().split())
-k = list(map(int, input().split()))
+data = list(map(int, input().split()))
 
 # table은 0을 n+1개가 아닌 M+1개로!! 공의 갯수가 n개 이고, 가능한 무게들은 m이하이기 때문에!!
 table = [0] * ( m + 1 )
 total = 0
-for i in k:
-    table[i] = table[i] + 1
+for i in data:
+    table[i] += 1
 
 for i in table[1:]:
-    if table[i] != 0:
-        total += (n - table[i]) * table[i]
-        n -= table[i]
+    if i != 0:
+        n -= i
+        total += n * i
 
 print(total)
