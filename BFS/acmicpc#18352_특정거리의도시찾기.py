@@ -13,38 +13,39 @@
 # 이 때 도달할 수 있는 도시 중에서, 최단 거리가 K인 도시가 하나도 존재하지 않으면 -1을 출력한다.
 
 ''' 다익스트라 문제로 분류되어있지만, BFS로 풀 수 있는 문제.'''
+''' 풀이 변경한 점 : 이전에는 deque안에 (해당 점까지 거리, 노드번호) 와 같이 튜플 형태로 전달해주었으나,
+   거리를 나타내고, 방문했는지를 동시에 나타낼 수 있는 visited 리스트를 이용하였다. ==> 공간, 시간복잡도 효율성 UP'''
 import sys
 from collections import deque
 
 input = sys.stdin.readline
 n, m, k, x = map(int, input().split())
 graph = [[] for _ in range(n + 1)]
+visited = [-1] * (n + 1)
 for _ in range(m):
     a, b = map(int, input().split())
     graph[a].append(b)
-visited = [False] * (n + 1)
-result = []
 
 
 def bfs(start):
-    visited[start] = True
-    q = deque([(0, start)])
+    q = deque()
+    q.append(start)
+    visited[start] = 0
 
     while q:
-        dist, now = q.popleft()
-        if dist == k:
-            result.append(now)
+        now = q.popleft()
+        if visited[now] == k:
+            q = list(q)
+            q.append(now)
+            q.sort()
+            for i in q:
+                print(i)
+            exit()
         for i in graph[now]:
-            if not visited[i]:
-                visited[i] = True
-                q.append((dist + 1, i))
+            if visited[i] == -1:
+                q.append(i)
+                visited[i] = visited[now] + 1
+    print(-1)
 
 
 bfs(x)
-
-if not result:
-    print(-1)
-else:
-    result.sort()
-    for i in result:
-        print(i)
