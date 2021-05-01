@@ -5,28 +5,29 @@
        4. X에서 1을 뺀다.
 
        정수 X가 주어졌을 때, 연산 4개를 적절히 사용해서 1을 만들려고 한다. 연산을 사용하는 횟수의 최솟값을 출력하시오.'''
-dpTable = [0]*300001
 x = int(input())
+dp = [0]*(x+1)
 arr = (2,3,5)
 
 def tddp(n):
     if n == 1:
         return 0
-    if n == 2 or n == 3 or n == 5:
+    elif n==2 or n == 3 or n==5:
         return 1
-    if dpTable[n] != 0:
-        return dpTable[n]
-# 이 아랫줄 tmp = [dpTable[n-1]]과 같이 초기화해주면 안됨. 그럴 경우, 나중에 하위 계산에서 1,2,3,5는 우리가 함숫값으로 갖고오지, dpTable상에는 제대로 된 값이 아닌
-# 0으로 채워져있기 때문.
-    tmp = [tddp(n-1)]
+    if dp[n] != 0:
+        return dp[n]
+
+    temp = tddp(n-1)
     for i in arr:
         if n % i == 0:
-            tmp.append(tddp(n//i))
-    dpTable[n] = min(tmp) + 1
-    return dpTable[n]
-
+            temp = min(temp,tddp(n//i))
+    dp[n] = temp + 1
+    return dp[n]
 
 print(tddp(x))
+# 이 아랫줄 tmp = [dpTable[n-1]]과 같이 초기화해주면 안됨. 그럴 경우, 나중에 하위 계산에서 1,2,3,5는 우리가 함숫값으로 갖고오지, dpTable상에는 제대로 된 값이 아닌
+# 0으로 채워져있기 때문.
+
 
 
 # Top-Down Dynamic-Programming에서  기억해야할 점
