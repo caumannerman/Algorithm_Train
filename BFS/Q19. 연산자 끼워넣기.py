@@ -15,51 +15,35 @@ N개의 수와 N-1개의 연산자가 주어졌을 때, 만들 수 있는 식의
 # 둘 째 줄에는 최솟값을 출력
 # 최대, 최솟값이 항상 -10억보다 크거나 같고, 10억보다 작거나 같은 결과가 나오는 입력만 주어진다. 또한 앞에서부터 계산했을 때, 중간에 계산되는 식의 결과도 동일 범위에 있다.
 
-## 42분까지
-from itertools import permutations
-from collections import deque
+
+import sys
+input = sys.stdin.readline
+
 n = int(input())
+data = list(map(int, input().split()))
+add,sub,mul,div = list(map(int ,input().split()))
 
-num = deque(map(int, input().split()))
+max_result = -int(1e9)
+min_result = int(1e9)
 
-add, sub, mul, div = map(int, input().split())
+def dfs(level, result, add,sub,mul,div):
+    if level == n-1:
+        global max_result, min_result
+        max_result = max(max_result,result)
+        min_result = min(min_result, result)
+        return
 
-op = []
-for _ in range(add):
-    op.append(0)
-for _ in range(sub):
-    op.append(1)
-for _ in range(mul):
-    op.append(2)
-for _ in range(div):
-    op.append(3)
-
-
-result = []
-
-possible = deque(permutations(op, n-1))
-stack = []
-
-for i in possible:
-    ing = num[0]
-    for j in range(len(i)):
-        nop = i[j]
-        nnum = num[j+1]
-        if nop == 0:
-            ing = ing + nnum
-        elif nop == 1:
-            ing = ing - nnum
-        elif nop == 2:
-            ing = ing * nnum
+    if add:
+        dfs(level+1, result + data[level+1], add-1, sub,mul,div)
+    if sub:
+        dfs(level + 1, result - data[level+1], add, sub-1, mul, div)
+    if mul:
+        dfs(level+1, result * data[level+1], add, sub, mul-1, div)
+    if div:
+        if result >= 0:
+            dfs(level+1, result // data[level+1], add, sub, mul, div-1)
         else:
-            if ing >= 0:
-                ing = ing // nnum
-            else:
-                ing = -((-ing)//nnum)
-    result.append(ing)
-
-
-print(max(result))
-print(min(result))
-
-
+            dfs(level+1, -((-result)//data[level+1]) , add, sub, mul, div-1)
+dfs(0, data[0], add, sub, mul, div)
+print(max_result)
+print(min_result)
