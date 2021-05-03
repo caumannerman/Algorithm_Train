@@ -11,28 +11,43 @@ X가 2로 나누어 떨어지면, 2로 나눈다.
 # 22 21 7 6  2 1
 # 22 11 10 5 4 2 1
 # 22 11 10 9 3 1
+'''for i in range(4,n+1):
+    if i % 3 == 0:
+        dp[i] = dp[i//3] + 1
+    elif i % 2==0:
+        dp[i] = dp[i//2] + 1
+    else:
+        dp[i] = dp[i-1] + 1
+    이렇게 하면 안되는 이유 : 28에서 14 7 6 2 1 과 같이 진행되는데, 
+    가장 빠른 길은          28에서   27 9 3 1이다.        '''
+
+""" 중요한 점 : 연습문제 "효율적인 화폐구성"에서와 같이 잔돈이 2,3,5원 일때, 2원으로 처음부터 끝까지 값 갱신 다하고, 3원, 5원 순으로 값을 갱신하는 것은
+이 문제에서는 사용할 수 없다. 2,3,5원 문제는 다 "덧셈"의 문제이므로, 순서가 어떻게 바뀌어도 똑같다 ( 교환법칙) 
+하지만, 이 문제에서는 2와 3으로 곱하는 것이 포함되므로, 순서가 바뀌면 값도 달라진다."""
+import sys
+input = sys.stdin.readline
 n = int(input())
 
-if n == 2 or n == 3:
-    print(1)
-elif n == 1:
+if n == 1:
     print(0)
-else:
+    exit()
+elif n == 2 or n == 3:
+    print(1)
+    exit()
 
-    count = 0
+dp = [0]*(n+1)
+dp[2],dp[3] = 1, 1
 
-    dpTable = [0] * (n + 1)
 
-    dpTable[2] = 1
-    dpTable[3] = 1
-
-    for i in range(4, n + 1):
-        temp = []
-        if i % 3 == 0:
-            temp.append(dpTable[i // 3] + 1)
+for i in range(4,n+1):
+    if i % 3 == 0:
         if i % 2 == 0:
-            temp.append(dpTable[i // 2] + 1)
-        temp.append(dpTable[i - 1] + 1)
-        dpTable[i] = min(temp)
+            dp[i] = min(dp[i//3], dp[i//2],dp[i-1]) + 1
+        else:
+            dp[i] = min(dp[i//3], dp[i-1]) + 1
+    elif i % 2 == 0:
+        dp[i] = min(dp[i//2], dp[i-1]) + 1
+    else:
+        dp[i] = dp[i-1] + 1
 
-    print(dpTable[n])
+print(dp[n])
