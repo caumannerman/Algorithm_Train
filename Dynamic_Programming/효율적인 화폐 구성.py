@@ -5,29 +5,35 @@
 # 출력 : 첫 째 줄에 M원을 만들기 위한 최소한의 화폐개수를 출력한다.
 # 불가능 할 때는 -1을 출력한다.
 
-n, m = map(int, input().split())
+''' 이전 PS할 떄는, dp = [0] *(m+1)로 초기화를 하고, 각 인덱스미다, 잔돈 종류 수 만큼 이전 인덱스들을 확인하여 값을 갱신해주었는데,
+
+이 코드에서 바뀐 점은 애초에 10001로 두어, 일관적으로 min()연산을 쓰면 되도록 만든 것과,
+
+잔돈 단위마다 해당 금액부터 m원까지 각각 반복문을 수행한다는 점이다.'''
+import sys
+input = sys.stdin.readline
+
+n ,m =  map(int ,input().split())
 data = []
+
 for _ in range(n):
     data.append(int(input()))
 
-dp = [0] * (m+1)
-for i in data:
-    if i <= m:
-        dp[i] = 1
+dp = [10001] * (m+1)
 
-for i in range(2,m+1):
-    if dp[i] != 0:
-        continue
-    tmp = []
-    for j in data:
-        if i - j > 0:
-            if dp[i-j] != 0:
-                tmp.append(dp[i-j] + 1)
-    if not tmp:
-        continue
-    dp[i] = min(tmp)
+#for i in range(n):
+#    dp[data[i]] =1
+# 이렇게 안하고, dp[0] = 0 이라고 해놓고, 2중 for문 안쪽에서 data[i]부터 시작하면 된다. ==> data[i] 즉, 잔돈 단위가 거슬러줘야하는 m보다 클 경우, 반복문이
+# for j in range(7,3)과 같은 형태가 되어, 알아서 실행을 안한다.
+# 잔돈 단위를 받으며 m보다 큰 경우 제외시키는 방법도 있기는 하다!
 
-if dp[m] == 0:
+dp[0] = 0
+
+for i in range(n):
+    for j in range(data[i], m+1):
+        if dp[j-data[i]] != 10001:
+            dp[j] = min(dp[j], dp[j-data[i]] + 1)
+if dp[m] == 10001:
     print(-1)
 else:
     print(dp[m])
