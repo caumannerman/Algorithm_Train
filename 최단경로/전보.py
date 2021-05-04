@@ -43,3 +43,11 @@ for i in range(1,n+1):
         count += 1
         max_time = max(max_time, distance[i])
 print(count, max_time)
+''' 이와 같이 수행하는 것이 오히려 빠르다. count를 그냥 1씩 더하고, 마지막에 count-1을 출력해주는 것.
+for i in distance[1:]:
+    if i != INF:
+        count += 1
+        max_time = max(max_time, i)
+
+print(count-1, max_time)
+'''
