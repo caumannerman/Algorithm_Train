@@ -18,9 +18,9 @@ for _ in range(n):
     data.append(int(input()))
 
 data.sort()
-result = data[-1]
-for i in range(len(data) - 2, -1, -1):
-    weight = data[i] * (len(data) - i)
-    if weight > result:
-        result = weight
+result = n * data[0]
+for i in range(1,n):
+    now = (n-i) * data[i]
+    if result < now:
+        result = now
 print(result)
