@@ -13,7 +13,7 @@ input = sys.stdin.readline
 n = int(input())
 data = list(map(int ,input().split()))
 data.sort()
-
+'''
 if n == 1 and data[0] == 1:
     print(2)
     exit()
@@ -29,4 +29,17 @@ for i in range(1, len(data)):
     else:
         sum += data[i]
 print(sum + 1)
+'''
+# More 간결한 코드 
+a = int(input())
+data = list(map(int, input().split()))
 
+data.sort()
+former = 0
+for i in range(len(data)):
+    if former +1 < data[i]:
+        print(former+1)
+        exit()
+    else:
+        former += data[i]
+print(former+1)
