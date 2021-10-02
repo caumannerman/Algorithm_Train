@@ -22,3 +22,14 @@ for i in range(n):
         minmax = temp
 
 print(minmax)
+
+# 21.10.2 풀이
+
+import sys
+input = sys.stdin.readline
+n, m = map(int, input().split())
+data = []
+for _ in range(n):
+    data.append(min(list(map(int, input().split()))))
+
+print(max(data))
