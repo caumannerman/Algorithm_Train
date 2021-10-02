@@ -24,3 +24,27 @@ if five == -1:
     print(-1)
 else:
     print(five + three)
+
+#21.10.2 더 빠르고 가벼운 풀이
+
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+
+result5 = 0
+result5 += n // 5
+n -= (n // 5) * 5
+
+while True:
+    if n % 3 == 0:
+        print(result5 + n//3)
+        exit()
+    else:
+        if result5 != 0:
+            n += 5
+            result5 -= 1
+            continue
+        else:
+            print(-1)
+            exit()
