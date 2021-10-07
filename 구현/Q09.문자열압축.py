@@ -12,43 +12,31 @@
 # s는 알파벳 소문자로만 이루어져있다.
 
 
-s = list(input())
+def solution(s):
+    ################ 길이가 1일 때 조심해야한다!!!!
+    if len(s) == 1:
+        return 1
+    # 1~ len(s) //2 까지 체크해야함
+    result = int(1e9)
 
-def solutions(s):
-    min_arr = []
-    for i in range(1, len(s)//2+1):
-        arr = []
-        iter = i
-        temp = ""
-        for j in range(len(s)):
-
-            temp += s[j]
-            iter -= 1
-            if iter == 0:
-                arr.append(temp)
-                iter = i
-                temp = ""
-        arr.append(temp)
-
-        min_len = len(s)
-        succesive = 0
-        for k in range(1, len(arr)):
-
-            if arr[k] == arr[k-1]:
-                succesive += 1
+    for leng in range(1, len(s) // 2 + 1):
+        former = s[:leng]
+        count = 1
+        length = 0
+        for i in range(leng, len(s), leng):
+            now = s[i:i + leng]
+            if now == former:
+                count += 1
+                continue
             else:
-                if succesive == 0:
-                    pass
-                elif succesive == 1:
-                    min_len -= i-1
-                else:
-                    min_len -= succesive*i-1
-                succesive = 0
-        min_arr.append(min_len)
-    return min(min_arr)
+                length += len(str(count)) + len(former) if count >= 2 else len(former)
+                former = now
+                count = 1
+        length += len(str(count)) + len(former) if count >= 2 else len(former)
+
+        result = min(result, length)
+    return result
 
 
-print(solutions(s))
-
-
-
+# 생각해보면, 모든 경우를 다 따져봐야지만 정답을 구할 수 있는 것이 자명하다 ==> 입력되는 데이터 크기를 확인 ==> 500자 이하 ==> 그렇게 길지 않다.
+# ==> 완전탐색 구현 가능 ( 시간 초과 없이) ==> 마음 놓고 반복문 돌리자!!!!!!!!
