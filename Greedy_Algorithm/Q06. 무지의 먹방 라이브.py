@@ -33,40 +33,55 @@ def solution(food_times, k):
                 return i+2
 
 '''
+
+
 def solution(food_times, k):
-    if sum(food_times) <= k:
-        return -1
-
-    q = []
-    for i in range(len(food_times)):
-        heapq.heappush(q, (food_times[i], i + 1))
-
-
-    length = len(food_times)
-    end = []
-    prev = 0
+    jmin = 0
+    rest_len = len(food_times)
 
     while True:
-        if q[0][0] * length < k:
-            end.append( q[0][1] )
-            k -= (heapq.heappop(q)[0] - prev) * length
-            length -= 1
-        elif q[0][0] * length == k:
-            for i in range(1, len(food_times)+1):
-                if i not in end:
-                    return i
-        else:
-            k %= length
-            for i in range(1,len(food_times)+1):
-                if not i in end:
+        if k < rest_len:
+            k += 1
+            for i in range(len(food_times)):
+                if food_times[i] >= jmin + 1:
                     k -= 1
-                if k == 0:
-                    return i + 1
+                    if k == 0:
+                        return i + 1
+
+        else:
+            jmin += 1
+            k -= rest_len
+            rest_len -= food_times.count(jmin)
+            if rest_len == 0:
+                return -1
+
+    return answer
 
 
-
-
-
-print(solution(food_times, k))
+# 위의 코드는 정확성  테스트는 모두 통과하나, 효율성에서 모두 실패..
 
 # 우선순위 큐를 이용하여 처리해 주는 것이 Point
+
+import heapq
+
+
+def solution(food_times, k):
+    answer = -1
+    h = []
+    for i in range(len(food_times)):
+        heapq.heappush(h, (food_times[i], i + 1))
+    food_num = len(food_times)  # 남은 음식 개수
+    previous = 0  # 이전에 제거한 음식의 food_time
+
+    while h:  # 먹는데 걸리는 시간: (남은 양) * (남은 음식 개수)
+        t = (h[0][0] - previous) * food_num  # 시간이 남을 경우 현재 음식 빼기
+        if k >= t:
+            k -= t
+            previous, _ = heapq.heappop(h)
+            food_num -= 1  # 시간이 부족할 경우(음식을 다 못먹을 경우) 남은 음식 중에 먹어야 할 음식 찾기
+        else:
+            idx = k % food_num
+            h.sort(key=lambda x: x[1])
+            answer = h[idx][1]
+            break
+    return answer
