@@ -7,33 +7,33 @@
 # 그리고 연속해서 두 개 이상의 연산자가 나타나지 않고, 5자리보다 많이 연속되는 숫자는 없다. 수는 0으로 시작할 수 있다. 입력으로 주어지는 식의 길이는 50보다 작거나 같다.
 # 출력 : 첫째 줄에 정답을 출력한다.
 
-import sys
-input = sys.stdin.readline
-a = list(input().rstrip())
-
-tmp = ""
-result = 0
 # -가 나온 뒤로는 모든 숫자를 빼주도록 괄호를 칠 수 있게 된다.  따라서 -가 나오는 순간 op를 True로 바꿔주고  이후에 나오는 숫자들은 모두 빼준다.
 # 그 전까지는, 즉, op가 그대로 False인 동안에는 숫자들을 모두 더해줄 수 밖에 없다.
-op = False
+# 21.10.10  새로 작성한 코드 ( 효율적)
+import sys
 
-for i in range(len(a)):
-    if a[i].isdigit():
-        tmp += a[i]
-    else:
-        if op == True:
-            result -= int(tmp)
-            tmp = ""
-        else:
-            result += int(tmp)
-            tmp = ""
-        if a[i] == '-':
-            op = True
-        else:
-            continue
-if op:
-    result -= int(tmp)
+input = sys.stdin.readline
+
+sik = list(input())
+former_idx = 0
+result = 0
+minus = False
+for i in range(len(sik)):
+    if sik[i] == '+':
+        result += int(''.join(sik[former_idx:i]))
+        former_idx = i + 1
+    elif sik[i] == '-':
+        result += int(''.join(sik[former_idx:i]))
+        former_idx = i + 1
+        minus = True
+        break
+
+for i in range(former_idx, len(sik)):
+    if sik[i] == '-' or sik[i] == '+':
+        result -= int(''.join(sik[former_idx:i]))
+        former_idx = i + 1
+if minus:
+    result -= int(''.join(sik[former_idx:]))
 else:
-    result += int(tmp)
-
+    result += int(''.join(sik[former_idx:]))
 print(result)
