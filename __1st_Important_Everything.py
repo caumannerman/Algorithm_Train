@@ -41,14 +41,19 @@ def bs(target):
             start = mid + 1
         else:
             end = mid - 1
-    return -1
+    return None
 
 # DP
 
-
-
-distance = [INF] * (n + 1)
-
+# Dijkstra
+import heapq
+n, m = map(int, input().split())
+INF = int(1e9)
+distance = [INF] * (n+1)
+graph = [[] for _ in range(n+1)]
+for _ in range(m):
+    a, b, c = map(int, input().split())
+    graph[a].append((b,c))
 
 def dijkstra(start):
     q = [(0, start)]
@@ -68,6 +73,10 @@ def dijkstra(start):
 # Floyd-warshall
 # 인접행렬 구성 , 대각선 원소들 0으로 초기화
 #
+INF = int(1e9)
+distance = [[INF] * (n+1) for _ in range(n+1)]
+for i in range(1, n+1):
+    distance[i][i] = 0
 
 for k in range(1, n + 1):
     for i in range(1, n + 1):
@@ -80,6 +89,7 @@ for k in range(1, n + 1):
 
 
 # union&find , 서로소, 싸이클, Kruskal
+parent = [i for i in range(n+1)]
 def find(parent, v):
     if parent[v] != v:
         parent[v] = find(parent, parent[v])
@@ -93,12 +103,30 @@ def union(parent, a, b):
         parent[b] = a
     else:
         parent[a] = b
+---------- Kruskal---------------------
+edges = []
+for _ in range(m):
+    a, b, cost = map(int, input().split())
+    edges.append((cost, a,b))
+edges.sort()
+result = 0
 
+for cost, a, b in edges:
+    if find(parent,a) != find(parent, b):
+        union(parent, a, b)
+        result += cost
+    else:
+        continue
 
 # 간선 (거리,a,b)로 리스트에 모두 담고, sort()
 # 하나씩 pop 하며, 싸이클이 안 생길 경우에만 union 하면서 Kruskal Algo 수행 가능
 
 indegree = [0] * (n+1)
+graph = [[] for _ in range(n+1)]
+for _ in range(m):
+    a, b = map(int ,input().split())
+    graph[a].append(b)
+    indegree[b] += 1
 # 간선 입력받으며, indegree 수정
 result = []
 
