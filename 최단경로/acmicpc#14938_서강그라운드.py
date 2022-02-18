@@ -1,32 +1,51 @@
 import sys
-
 input = sys.stdin.readline
+from collections import deque
 
-n, m, r = map(int, input().split())
-item = [0] + list(map(int, input().split()))
-INF = int(1e9)
-graph = [[INF] * (n + 1) for _ in range(n + 1)]
-for i in range(n + 1):
-    graph[i][i] = 0
+n, l, r = map(int, input().split())
+data = []
+for _ in range(n):
+    data.append(list(map(int, input().split())))
 
-for _ in range(r):
-    a, b, l = map(int, input().split())
-    graph[a][b] = l
-    graph[b][a] = l
-for k in range(1, n + 1):
-    for i in range(1, n + 1):
-        if i == k:
-            continue
-        for j in range(1, n + 1):
-            if j == i or j == k:
+dx = [0, 1]
+dy = [1, 0]
+visited = [[False] * n for _ in range(n)]
+
+def bfs(x, y):
+    q = deque([(x,y)])
+    visited[x][y] = True
+    idx = 0
+    while len(q) > idx:
+        for i in range(2):
+            nx = q[idx][0] + dx[i]
+            ny = q[idx][1] + dy[i]
+            if nx >= n or ny >= n:
                 continue
-            graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
+            if l <= abs(data[nx][ny] - data[x][y]) <= r:
+                q.append((nx,ny))
+                visited[nx][ny] = True
+                idx += 1
+    if len(q) > 1:
+        temp = 0
+        for (qx, qy) in q:
+            temp += data[qx][qy]
+        temp //= len(q)
+        for (qx, qy) in q:
+            data[qx][qy] = temp
+        return True
+    return False
+
+
 result = 0
-for i in range(1, n + 1):
-    temp = 0
-    for j in range(1, n + 1):
-        if graph[i][j] <= m:
-            print(i, item[j])
-            temp += item[j]
-    result = max(result, temp)
+while True:
+    tick = False
+    for i in range(n):
+        for j in range(n):
+            if not visited[i][j]:
+                if bfs(i,j):
+                    tick = True
+    if tick:
+        result += 1
+        continue
+    break
 print(result)
